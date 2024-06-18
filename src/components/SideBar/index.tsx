@@ -2,17 +2,22 @@ import { HAR } from "@types";
 import { S } from "./styles";
 
 type Props = {
-  onActive: (ApiId: string) => void;
+  onActive: (ApiId: HAR["apiId"]) => void;
   apiList: HAR[];
 };
 
 function Sidebar(props: Props) {
   const { apiList, onActive } = props;
+
   return (
     <S.Sidebar>
       <S.List>
-        {apiList.map((api) => (
-          <S.ListItem key={api.apiId} onClick={() => onActive(api.apiId)}>
+        {apiList.map((api, i) => (
+          <S.ListItem
+            $isOdd={i % 2 === 0}
+            key={api.apiId}
+            onClick={() => onActive(api.apiId)}
+          >
             {getUrlPath(api.request.url)}
           </S.ListItem>
         ))}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useId } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { HAR } from "@types";
 import { Sidebar } from "@components";
@@ -6,12 +6,13 @@ import { S } from "./AppStyles";
 
 function App() {
   const [apiList, setApiList] = useState<HAR[]>([]);
+  const idCounter = useRef(0); // Initialize a ref to keep track of IDs
 
   useEffect(() => {
     const handleNetworkRequestFinished = (har: Omit<HAR, "apiId">) => {
       if (har._resourceType === "xhr" || har._resourceType === "fetch") {
         console.log(har);
-        setApiList((prev) => [...prev, { ...har, apiId: useId() }]);
+        setApiList((prev) => [...prev, { ...har, apiId: idCounter.current++ }]);
       }
     };
 

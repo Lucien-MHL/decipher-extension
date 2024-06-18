@@ -2,10 +2,13 @@ import styled from "styled-components";
 
 export const S = {
   Interface: styled.main`
-    width: 100%;
-    height: 100%;
-    background-color: #0f172a;
+    width: 100vw;
+    height: 100vh;
+    background-color: ${({ theme }) => theme.code_background};
 
     display: flex;
+  `,
+  Title: styled.h1`
+    color: red;
   `,
 };
