@@ -4,6 +4,7 @@ import { S } from "./styles";
 type Props = {
   onActive: (ApiId: HAR["apiId"]) => void;
   apiList: HAR[];
+  apiId: HAR["apiId"] | null;
 };
 
 function Sidebar(props: Props) {
@@ -15,6 +16,7 @@ function Sidebar(props: Props) {
         {apiList.map((api, i) => (
           <S.ListItem
             $isOdd={i % 2 === 0}
+            $isActive={api.apiId === props.apiId}
             key={api.apiId}
             onClick={() => onActive(api.apiId)}
           >

@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 
 import { HAR } from "@types";
-import { Sidebar } from "@components";
+import { Tabs } from "@enum";
+import { Sidebar, TabSwitcher, RequestContent } from "@components";
 import { S } from "./AppStyles";
 
 function App() {
   const [apiList, setApiList] = useState<HAR[]>([]);
   const idCounter = useRef(0); // Initialize a ref to keep track of IDs
+  const [tabKey, setTabKey] = useState(Tabs.PAYLOAD);
+  const [activeApiId, setActiveApiId] = useState<HAR["apiId"] | null>(null);
 
   useEffect(() => {
     const handleNetworkRequestFinished = (har: Omit<HAR, "apiId">) => {
@@ -20,17 +23,30 @@ function App() {
       handleNetworkRequestFinished
     );
 
-    // Cleanup function to remove the listener when the component unmounts
     return () => {
       chrome.devtools.network.onRequestFinished.removeListener(
         handleNetworkRequestFinished
       );
     };
-  }, []); // Empty dependency array means this effect runs once on mount
+  }, []);
 
   return (
     <S.Interface>
-      <Sidebar onActive={(data) => console.log(data)} apiList={apiList} />
+      <Sidebar
+        onActive={(apiId) => setActiveApiId(apiId)}
+        apiList={apiList}
+        apiId={activeApiId}
+      />
+      <S.Content>
+        {!!apiList.length && (
+          <TabSwitcher tabKey={tabKey} onChange={setTabKey} />
+        )}
+        {!!activeApiId && (
+          <S.Wrap>
+            <RequestContent />
+          </S.Wrap>
+        )}
+      </S.Content>
     </S.Interface>
   );
 }

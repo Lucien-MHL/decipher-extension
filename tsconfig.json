@@ -25,7 +25,8 @@
     "paths": {
       "@*": ["src/*"],
       "@components": ["src/components"],
-      "@types": ["src/types"]
+      "@types": ["src/types"],
+      "@enum": ["src/enum"]
     }
   },
   "include": ["src", "src/**/*.ts", "src/**/*.tsx"],
