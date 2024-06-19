@@ -16,6 +16,29 @@ function App() {
   const [tabKey, setTabKey] = useState(Tabs.PAYLOAD);
   const [activeApiId, setActiveApiId] = useState<HAR["apiId"] | null>(null);
 
+  // reset
+  useEffect(() => {
+    const handleTabChangeEvent = (
+      _: number,
+      changeInfo: chrome.tabs.TabChangeInfo
+    ) => {
+      console.log(changeInfo);
+      const isRefresh =
+        changeInfo.status === "loading" && Object.keys(changeInfo).length === 1;
+      if (isRefresh) {
+        setApiList([]);
+        setActiveApiId(null);
+      }
+    };
+
+    // 監聽頁籤更新事件
+    chrome.tabs.onUpdated.addListener(handleTabChangeEvent);
+
+    return () => {
+      chrome.tabs.onUpdated.removeListener(handleTabChangeEvent);
+    };
+  }, []);
+
   useEffect(() => {
     const handleNetworkRequestFinished = (har: Omit<HAR, "apiId">) => {
       if (har._resourceType === "xhr" || har._resourceType === "fetch") {
