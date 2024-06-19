@@ -7,6 +7,8 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    scrollbar-width: none; /* 隱藏滾動條，但允許滾動 */
   }
   /* 隱藏滾動條，但允許滾動 */
   html {
@@ -15,14 +17,11 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     -ms-overflow-style: none;  /* 這行對於IE 10+有效 */
-    overflow-y: scroll;        /* 保證垂直滾動功能 */
+    overflow-y: hidden;        /* 保證垂直滾動功能 */
     overflow-x: hidden;        /* 隱藏水平滾動條 */
   }
 
-  /* 這部分適用於WebKit基礎的瀏覽器（如Chrome、Edge、Opera、Safari） */
-  ::-webkit-scrollbar {
-    display: none; /* 隱藏滾動條 */
-  }
+
 `;
 
 export interface Palette {

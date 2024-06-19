@@ -20,5 +20,6 @@ export const S = {
     width: 100%;
     height: calc(100% - 38px);
     overflow-y: auto;
+    scrollbar-width: auto;
   `,
 };

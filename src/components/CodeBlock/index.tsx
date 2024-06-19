@@ -12,6 +12,7 @@ function CodeBlock({ ...rest }: Props) {
         displayDataTypes={false}
         enableClipboard={true}
         quotesOnKeys={false}
+        collapsed={1}
         {...rest}
       />
     </S.CodeBlock>

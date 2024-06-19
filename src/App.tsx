@@ -40,6 +40,10 @@ function App() {
   return (
     <S.Interface>
       <Sidebar
+        onClear={() => {
+          setApiList([]);
+          setActiveApiId(null);
+        }}
         onActive={(apiId) => setActiveApiId(apiId)}
         apiList={apiList}
         apiId={activeApiId}

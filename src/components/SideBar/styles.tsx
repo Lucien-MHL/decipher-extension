@@ -16,7 +16,7 @@ export const S = {
   `,
   List: styled.ul`
     width: 100%;
-    height: 100%;
+    height: calc(100% - 60px);
     list-style: none;
     overflow-y: auto;
   `,
@@ -37,5 +37,22 @@ export const S = {
     text-overflow: ellipsis;
 
     ${({ $isActive }) => !$isActive && hoverEffect}
+  `,
+  ClearButton: styled.button`
+    /* reset */
+    border: none;
+    outline: none;
+    background: none;
+
+    margin: 0.75rem;
+    padding: 0.5rem;
+    background-color: ${({ theme }) => theme.code};
+    border-radius: 5px;
+
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: ${({ theme }) => theme.navy};
+    cursor: pointer;
   `,
 };
