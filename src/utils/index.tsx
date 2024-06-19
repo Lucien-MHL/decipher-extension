@@ -18,11 +18,11 @@ export const decrypt = ({ encode, key }: DecryptProps) => {
   }
 };
 
-export const getDecryptKey = (data: HAR["request"]) => {
+export const getDecryptKey = (data: Partial<HAR["request"]>) => {
   const getValueByKey = (key: string) =>
-    data.headers.find((header) => header.name === key)?.value;
+    data?.headers?.find((header) => header.name === key)?.value;
 
-  if (data.url.includes("queryGameListForApp"))
+  if (data?.url?.includes("queryGameListForApp"))
     return getValueByKey("site")?.padStart(16, "1") || "";
 
   return `${getValueByKey("site")}${getValueByKey("siteTime")?.slice(-8)}`;

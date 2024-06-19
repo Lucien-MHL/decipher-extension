@@ -2,7 +2,12 @@ import { useState, useEffect, useRef } from "react";
 
 import { HAR } from "@types";
 import { Tabs } from "@enum";
-import { Sidebar, TabSwitcher, RequestContent } from "@components";
+import {
+  Sidebar,
+  TabSwitcher,
+  RequestContent,
+  ResponseContent,
+} from "@components";
 import { S } from "./AppStyles";
 
 function App() {
@@ -14,7 +19,10 @@ function App() {
   useEffect(() => {
     const handleNetworkRequestFinished = (har: Omit<HAR, "apiId">) => {
       if (har._resourceType === "xhr" || har._resourceType === "fetch") {
-        setApiList((prev) => [...prev, { ...har, apiId: idCounter.current++ }]);
+        setApiList((prev) => [
+          ...prev,
+          { ...har, apiId: idCounter.current++, getContent: har.getContent },
+        ]);
       }
     };
 
@@ -37,14 +45,23 @@ function App() {
         apiId={activeApiId}
       />
       <S.Content>
-        {!!apiList.length && (
+        {!!activeApiId && !!apiList.length && (
           <TabSwitcher tabKey={tabKey} onChange={setTabKey} />
         )}
         {!!activeApiId && (
           <S.Wrap>
-            <RequestContent
-              data={apiList.find((api) => api.apiId === activeApiId)?.request}
-            />
+            {tabKey === Tabs.PAYLOAD && (
+              <RequestContent
+                data={apiList.find((api) => api.apiId === activeApiId)?.request}
+              />
+            )}
+            {tabKey !== Tabs.PAYLOAD && (
+              <ResponseContent
+                tabKey={tabKey}
+                apiId={activeApiId}
+                data={apiList.find((api) => api.apiId === activeApiId)}
+              />
+            )}
           </S.Wrap>
         )}
       </S.Content>

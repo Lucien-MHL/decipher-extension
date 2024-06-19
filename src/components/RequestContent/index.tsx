@@ -1,8 +1,6 @@
-import ReactJson from "@microlink/react-json-view";
-
 import { HAR } from "@types";
 import { decrypt, getDecryptKey, isPostApi } from "@utils";
-import { S } from "./styles";
+import { CodeBlock } from "@components";
 
 type Props = {
   data?: HAR["request"];
@@ -16,17 +14,7 @@ function RequestContent({ data }: Props) {
     key: getDecryptKey(data),
   });
 
-  return (
-    <S.CodeBlock>
-      <ReactJson
-        src={JSON.parse(decode)}
-        theme="ashes"
-        displayDataTypes={false}
-        enableClipboard={true}
-        quotesOnKeys={false}
-      />
-    </S.CodeBlock>
-  );
+  return <CodeBlock src={JSON.parse(decode)} />;
 }
 
 export default RequestContent;
