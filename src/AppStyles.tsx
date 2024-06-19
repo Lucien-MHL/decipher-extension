@@ -14,6 +14,7 @@ export const S = {
   Content: styled.div`
     width: calc(100% - 300px);
     height: 100%;
+    color: ${({ theme }) => theme.dark_white};
   `,
   Wrap: styled.div`
     width: 100%;

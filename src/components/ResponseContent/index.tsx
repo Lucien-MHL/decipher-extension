@@ -13,17 +13,16 @@ type Props = {
 };
 
 function ResponseContent({ data, tabKey, apiId }: Props) {
+  if (!data) return null;
+  const key = getDecryptKey(data.request);
+  if (!key) return <p style={{ fontSize: "2rem" }}>此套件不支援目前的網頁</p>;
   const [decode, setDecode] = useState<string>("{}");
 
   useEffect(() => {
     setDecode("{}");
     data?.getContent((val) => {
       const encode = val.slice(1, -1);
-      const temp = decrypt({
-        encode,
-        key: getDecryptKey(data?.request || {}),
-      });
-      setDecode(temp);
+      setDecode(decrypt({ encode, key }));
     });
   }, [apiId]);
 

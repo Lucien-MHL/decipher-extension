@@ -8,11 +8,11 @@ type Props = {
 
 function RequestContent({ data }: Props) {
   if (!data || !isPostApi(data)) return null;
+  const key = getDecryptKey(data);
 
-  const decode = decrypt({
-    encode: JSON.parse(data.postData?.text || "").data,
-    key: getDecryptKey(data),
-  });
+  if (!key) return <p style={{ fontSize: "2rem" }}>此套件不支援目前的網頁</p>;
+  const encode = JSON.parse(data.postData?.text || "").data;
+  const decode = decrypt({ encode, key });
 
   return <CodeBlock src={JSON.parse(decode)} />;
 }

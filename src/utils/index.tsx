@@ -25,7 +25,9 @@ export const getDecryptKey = (data: Partial<HAR["request"]>) => {
   if (data?.url?.includes("queryGameListForApp"))
     return getValueByKey("site")?.padStart(16, "1") || "";
 
-  return `${getValueByKey("site")}${getValueByKey("siteTime")?.slice(-8)}`;
+  return `${getValueByKey("site") || ""}${
+    getValueByKey("siteTime")?.slice(-8) || ""
+  }`;
 };
 
 export const isPostApi = (data: HAR["request"] | undefined): boolean => {

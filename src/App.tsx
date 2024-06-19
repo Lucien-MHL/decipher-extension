@@ -45,10 +45,10 @@ function App() {
         apiId={activeApiId}
       />
       <S.Content>
-        {!!activeApiId && !!apiList.length && (
+        {activeApiId !== null && !!apiList.length && (
           <TabSwitcher tabKey={tabKey} onChange={setTabKey} />
         )}
-        {!!activeApiId && (
+        {activeApiId !== null && (
           <S.Wrap>
             {tabKey === Tabs.PAYLOAD && (
               <RequestContent
