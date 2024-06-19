@@ -14,7 +14,6 @@ function App() {
   useEffect(() => {
     const handleNetworkRequestFinished = (har: Omit<HAR, "apiId">) => {
       if (har._resourceType === "xhr" || har._resourceType === "fetch") {
-        console.log(har);
         setApiList((prev) => [...prev, { ...har, apiId: idCounter.current++ }]);
       }
     };
@@ -43,7 +42,9 @@ function App() {
         )}
         {!!activeApiId && (
           <S.Wrap>
-            <RequestContent />
+            <RequestContent
+              data={apiList.find((api) => api.apiId === activeApiId)?.request}
+            />
           </S.Wrap>
         )}
       </S.Content>

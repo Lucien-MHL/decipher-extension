@@ -26,7 +26,8 @@
       "@*": ["src/*"],
       "@components": ["src/components"],
       "@types": ["src/types"],
-      "@enum": ["src/enum"]
+      "@enum": ["src/enum"],
+      "@utils": ["src/utils"]
     }
   },
   "include": ["src", "src/**/*.ts", "src/**/*.tsx"],
