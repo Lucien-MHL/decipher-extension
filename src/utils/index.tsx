@@ -25,7 +25,12 @@ export const getDecryptKey = (data: Partial<HAR["request"]>) => {
       (header) => header.name.toLowerCase() === key.toLowerCase()
     )?.value;
 
-  if (data?.url?.includes("queryGameListForApp"))
+  console.log(data);
+
+  if (
+    data?.url?.includes("queryGameListForApp") &&
+    getValueByKey("site") !== "3Uecesuq"
+  )
     return getValueByKey("site")?.padStart(16, "1") || "";
 
   return `${getValueByKey("site") || ""}${
