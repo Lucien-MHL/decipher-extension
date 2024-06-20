@@ -21,10 +21,8 @@ function ResponseContent({ data, tabKey, apiId }: Props) {
   useEffect(() => {
     setDecode("{}");
     data?.getContent((val) => {
-      const isEncodeText = !val.startsWith("{") && !val.endsWith("}");
-      setDecode(
-        isEncodeText ? decrypt({ encode: val.slice(1, -1), key }) : val
-      );
+      const encode = val.slice(1, -1);
+      setDecode(decrypt({ encode, key }));
     });
   }, [apiId]);
 
