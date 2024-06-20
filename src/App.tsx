@@ -22,7 +22,6 @@ function App() {
       _: number,
       changeInfo: chrome.tabs.TabChangeInfo
     ) => {
-      console.log(changeInfo);
       const isRefresh =
         changeInfo.status === "loading" && Object.keys(changeInfo).length === 1;
       if (isRefresh) {

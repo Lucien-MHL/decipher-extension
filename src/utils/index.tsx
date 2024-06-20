@@ -9,6 +9,7 @@ type DecryptProps = {
 
 export const decrypt = ({ encode, key }: DecryptProps) => {
   try {
+    if (!encode) return "{}";
     const decode = CryptoJS.AES.decrypt(encode, CryptoJS.enc.Utf8.parse(key), {
       mode: CryptoJS.mode.ECB,
     });
@@ -20,7 +21,9 @@ export const decrypt = ({ encode, key }: DecryptProps) => {
 
 export const getDecryptKey = (data: Partial<HAR["request"]>) => {
   const getValueByKey = (key: string) =>
-    data?.headers?.find((header) => header.name === key)?.value;
+    data?.headers?.find(
+      (header) => header.name.toLowerCase() === key.toLowerCase()
+    )?.value;
 
   if (data?.url?.includes("queryGameListForApp"))
     return getValueByKey("site")?.padStart(16, "1") || "";
